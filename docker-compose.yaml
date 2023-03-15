@@ -1,0 +1,28 @@
+version: '1'
+
+services:
+  db:
+    image: postgres
+    container_name: simple-pg
+    ports:
+      - 5436:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    volumes:
+      - simple-volume:/var/lib/postgresql/data
+    networks:
+      - simple-backend
+
+volumes:
+  simple-volume:
+
+networks:
+  simple-backend:
+    
